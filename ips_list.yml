@@ -120,6 +120,6 @@ riscv-dbg:
 register_interface:
   commit: b1bc9c22e0c2a5801107070c022904498dbae34b
   domain: [soc]
-pulp_FSI:
+mask_gen:
   commit: master
-  group: szhao2095
+  group: Karthikeyan564

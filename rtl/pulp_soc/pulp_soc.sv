@@ -456,7 +456,7 @@ module pulp_soc import dm::*; #(
 		.AXI_DATA_WIDTH(32),
 		.AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
 		.AXI_USER_WIDTH(AXI_USER_WIDTH)
-	) s_wide_alu_bus();
+	) s_mask_gen_bus();
 
 
     logic s_cluster_isolate_dc;
@@ -810,18 +810,18 @@ module pulp_soc import dm::*; #(
         .l2_interleaved_slaves ( s_mem_l2_bus        ),
         .l2_private_slaves     ( s_mem_l2_pri_bus    ),
         .boot_rom_slave        ( s_mem_rom_bus       ),
-		.wide_alu_slave		   ( s_wide_alu_bus		 )
+		.mask_gen_slave		   ( s_mask_gen_bus		 )
         );
 		
-	wide_alu_top  #(
+	mask_gen_top  #(
 		.AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
 		.AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
 		.AXI_USER_WIDTH(AXI_USER_WIDTH)
-	) i_wide_alu (
+	) i_mask_gen (
 		.clk_i(s_soc_clk),
 		.rst_ni(s_soc_rstn),
 		.test_mode_i(dft_test_mode_i),
-		.axi_slave(s_wide_alu_bus)
+		.axi_slave(s_mask_gen_bus)
 	);
 		
 		
