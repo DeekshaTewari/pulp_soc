@@ -825,8 +825,8 @@ module pulp_soc import dm::*; #(
 		       .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
 		       .AXI_USER_WIDTH(AXI_USER_WIDTH)
 	       ) i_mask_gen (
-	       .clk(s_soc_clk),
-	       .rst_n(s_soc_rst),
+	       .clk_i(s_soc_clk),
+	       .rst_ni(s_soc_rst),
 	       .test_mode_i(dft_test_mode_i),
 	       .axi_slave(s_mask_gen_bus)
        	       );
