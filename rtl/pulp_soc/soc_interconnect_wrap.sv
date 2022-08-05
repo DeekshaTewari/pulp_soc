@@ -116,8 +116,8 @@ module soc_interconnect_wrap
     localparam NR_RULES_AXI_CROSSBAR = 4;
     localparam addr_map_rule_t [NR_RULES_AXI_CROSSBAR-1:0] AXI_CROSSBAR_RULES = '{
        '{ idx: 0, start_addr: `SOC_MEM_MAP_AXI_PLUG_START_ADDR,    end_addr: `SOC_MEM_MAP_AXI_PLUG_END_ADDR},
-       '{ idx: 1, start_addr: `SOC_MEM_MAP_PERIPHERALS_START_ADDR, end_addr: `SOC_MEM_MAP_PERIPHERALS_END_ADDR}};
-       '{ idx: 2, start_addr: `SOC_MEM_MAP_MASK_GEN_START_ADDR, end_addr: `SOC_MEM_MAP_MASK_GEN_END_ADDR}};
+       '{ idx: 1, start_addr: `SOC_MEM_MAP_PERIPHERALS_START_ADDR, end_addr: `SOC_MEM_MAP_PERIPHERALS_END_ADDR},
+       '{ idx: 2, start_addr: `SOC_MEM_MAP_MASK_GEN_START_ADDR, end_addr: `SOC_MEM_MAP_MASK_GEN_END_ADDR},
        '{ idx: 3, start_addr: `SOC_MEM_MAP_MASK_DECOMPRESS_START_ADDR, end_addr: `SOC_MEM_MAP_MASK_DECOMPRESS_END_ADDR}};
 
     //////////////////////////////
@@ -162,7 +162,7 @@ module soc_interconnect_wrap
               .AXI_DATA_WIDTH(32),
               .AXI_ID_WIDTH(pkg_soc_interconnect::AXI_ID_OUT_WIDTH),
               .AXI_USER_WIDTH(AXI_USER_WIDTH)
-              ) axi_slaves[3]();
+              ) axi_slaves[4]();
     `AXI_ASSIGN(axi_slave_plug, axi_slaves[0])
     `AXI_ASSIGN(axi_to_axi_lite_bridge, axi_slaves[1])
     `AXI_ASSIGN(mask_gen_slave, axi_slaves[2])
