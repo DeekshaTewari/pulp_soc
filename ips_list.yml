@@ -123,3 +123,8 @@ register_interface:
 mask_gen:
   commit: master
   group: Karthikeyan564
+Mask_Decompression:
+  commit: c0e11c6cffe76d2702189bf294e81c12e333e58a
+  server: https://github.com
+  group: ISMLImageSensors
+

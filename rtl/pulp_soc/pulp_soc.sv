@@ -451,12 +451,18 @@ module pulp_soc import dm::*; #(
         assign base_addr_int = 4'b0001; //FIXME attach this signal somewhere in the soc peripherals --> IGOR
     `endif
 
-	AXI_BUS #(
-		.AXI_ADDR_WIDTH(32),
-		.AXI_DATA_WIDTH(32),
-		.AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
-		.AXI_USER_WIDTH(AXI_USER_WIDTH)
-	) s_mask_gen_bus();
+    AXI_BUS #(.AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
+	      .AXI_DATA_WIDTH(AXI_DATA_OUT_WIDTH),
+	      .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
+	      .AXI_USER_WIDTH(AXI_USER_WIDTH)
+      ) s_mask_gen_bus();
+
+    AXI_BUS #(.AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
+	      .AXI_DATA_WIDTH(AXI_DATA_OUT_WIDTH),
+	      .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
+	      .AXI_USER_WIDTH(AXI_USER_WIDTH)
+      ) s_mask_decompress_bus();
+
 
 
     logic s_cluster_isolate_dc;
@@ -795,36 +801,52 @@ module pulp_soc import dm::*; #(
       .AXI_IN_ID_WIDTH(AXI_ID_IN_WIDTH),
       .AXI_USER_WIDTH(AXI_USER_WIDTH)
     ) i_soc_interconnect_wrap (
-        .clk_i                 ( s_soc_clk           ),
-        .rst_ni                ( s_soc_rstn          ),
-        .test_en_i             ( dft_test_mode_i     ),
-        .tcdm_fc_data          ( s_lint_fc_data_bus  ),
-        .tcdm_fc_instr         ( s_lint_fc_instr_bus ),
-        .tcdm_udma_rx          ( s_lint_udma_rx_bus  ),
-        .tcdm_udma_tx          ( s_lint_udma_tx_bus  ),
-        .tcdm_debug            ( s_lint_debug_bus    ),
-        .tcdm_hwpe             ( s_lint_hwpe_bus     ),
-        .axi_master_plug       ( s_data_in_bus       ),
-        .axi_slave_plug        ( s_data_out_bus      ),
-        .apb_peripheral_bus    ( s_apb_periph_bus    ),
-        .l2_interleaved_slaves ( s_mem_l2_bus        ),
-        .l2_private_slaves     ( s_mem_l2_pri_bus    ),
-        .boot_rom_slave        ( s_mem_rom_bus       ),
-		.mask_gen_slave		   ( s_mask_gen_bus		 )
+        .clk_i                 ( s_soc_clk             ),
+        .rst_ni                ( s_soc_rstn            ),
+        .test_en_i             ( dft_test_mode_i       ),
+        .tcdm_fc_data          ( s_lint_fc_data_bus    ),
+        .tcdm_fc_instr         ( s_lint_fc_instr_bus   ),
+        .tcdm_udma_rx          ( s_lint_udma_rx_bus    ),
+        .tcdm_udma_tx          ( s_lint_udma_tx_bus    ),
+        .tcdm_debug            ( s_lint_debug_bus      ),
+        .tcdm_hwpe             ( s_lint_hwpe_bus       ),
+        .axi_master_plug       ( s_data_in_bus         ),
+        .axi_slave_plug        ( s_data_out_bus        ),
+        .apb_peripheral_bus    ( s_apb_periph_bus      ),
+        .l2_interleaved_slaves ( s_mem_l2_bus          ),
+        .l2_private_slaves     ( s_mem_l2_pri_bus      ),
+        .boot_rom_slave        ( s_mem_rom_bus         ),
+		.mask_gen_slave        ( s_mask_gen_bus        ),
+		.mask_decompress_slave ( s_mask_decompress_bus )
         );
-		
-	mask_gen_top  #(
-		.AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
-		.AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
-		.AXI_USER_WIDTH(AXI_USER_WIDTH)
-	) i_mask_gen (
-		.clk_i(s_soc_clk),
-		.rst_ni(s_soc_rstn),
-		.test_mode_i(dft_test_mode_i),
-		.axi_slave(s_mask_gen_bus)
-	);
-		
-		
+
+	mask_gen_top #(
+		       .AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
+		       .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
+		       .AXI_USER_WIDTH(AXI_USER_WIDTH)
+	       ) i_mask_gen (
+	       .clk(s_soc_clk),
+	       .rst_n(s_soc_rst),
+	       .test_mode_i(dft_test_mode_i),
+	       .axi_slave(s_mask_gen_bus)
+       	       );
+
+	mask_decompress_top #(
+		       .AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
+		       .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
+		       .AXI_USER_WIDTH(AXI_USER_WIDTH)
+	       ) i_mask_decompress (
+	       .clk(s_soc_clk),
+	       .rst_n(s_soc_rst),
+	       .test_mode_i(dft_test_mode_i),
+	       .axi_slave(s_mask_decompress_bus)
+       	       );
+
+
+
+
+
+
     /* Debug Subsystem */
 
     dmi_jtag #(
