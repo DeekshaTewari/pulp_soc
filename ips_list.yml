@@ -124,7 +124,7 @@ mask_gen:
   commit: master
   group: Karthikeyan564
 Mask_Decompression:
-  commit: bef3b0691c316c10a92e25f6da8e007073c80bbc
+  commit: 4ef36e365efe7e915aca86194fd4fe34b2531a1d
   server: https://github.com
   group: ISMLImageSensors
 
