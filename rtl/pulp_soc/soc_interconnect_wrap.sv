@@ -180,7 +180,7 @@ module soc_interconnect_wrap
                        .NR_SLAVE_PORTS_CONTIG(3), // Bootrom + number of private memory banks (normally 1 for
                                                   // programm instructions and 1 for programm stack )
                        .NR_ADDR_RULES_SLAVE_PORTS_CONTIG(NR_RULES_CONTIG_CROSSBAR),
-                       .NR_AXI_SLAVE_PORTS(3), // 1 for AXI to cluster, 1 for SoC peripherals (converted to APB)
+                       .NR_AXI_SLAVE_PORTS(4), // 1 for AXI to cluster, 1 for SoC peripherals (converted to APB)
                        .NR_ADDR_RULES_AXI_SLAVE_PORTS(NR_RULES_AXI_CROSSBAR),
                        .AXI_MASTER_ID_WIDTH(1), //Doesn't need to be changed. All axi masters in the current
                                                 //interconnect come from a TCDM protocol converter and thus do not have and AXI ID.
