@@ -451,11 +451,11 @@ module pulp_soc import dm::*; #(
         assign base_addr_int = 4'b0001; //FIXME attach this signal somewhere in the soc peripherals --> IGOR
     `endif
 
-    //AXI_BUS #(.AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
-//	      .AXI_DATA_WIDTH(AXI_DATA_OUT_WIDTH),
-//	      .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
-//	      .AXI_USER_WIDTH(AXI_USER_WIDTH)
-//      ) s_mask_gen_bus();
+    AXI_BUS #(.AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
+	      .AXI_DATA_WIDTH(AXI_DATA_OUT_WIDTH),
+	      .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
+	      .AXI_USER_WIDTH(AXI_USER_WIDTH)
+      ) s_mask_gen_bus();
 
     AXI_BUS #(.AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
 	      .AXI_DATA_WIDTH(AXI_DATA_OUT_WIDTH),
@@ -816,20 +816,20 @@ module pulp_soc import dm::*; #(
         .l2_interleaved_slaves ( s_mem_l2_bus          ),
         .l2_private_slaves     ( s_mem_l2_pri_bus      ),
         .boot_rom_slave        ( s_mem_rom_bus         ),
-		//.mask_gen_slave        ( s_mask_gen_bus        ),
+		.mask_gen_slave        ( s_mask_gen_bus        ),
 		.mask_decompress_slave ( s_mask_decompress_bus )
         );
 
-//	mask_gen_top #(
-//		       .AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
-//		       .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
-//		       .AXI_USER_WIDTH(AXI_USER_WIDTH)
-//	       ) i_mask_gen (
-//	       .clk_i(s_soc_clk),
-//	       .rst_ni(s_soc_rst),
-//	       .test_mode_i(dft_test_mode_i),
-//	       .axi_slave(s_mask_gen_bus)
-//       	       );
+	mask_gen_top #(
+		       .AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
+		       .AXI_ID_WIDTH(AXI_ID_OUT_WIDTH),
+		       .AXI_USER_WIDTH(AXI_USER_WIDTH)
+	           ) i_mask_gen (
+	       .clk_i(s_soc_clk),
+	       .rst_ni(s_soc_rst),
+	       .test_mode_i(dft_test_mode_i),
+	       .axi_slave(s_mask_gen_bus)
+       	       );
 
 	mask_decompress_top #(
 		       .AXI_ADDR_WIDTH(AXI_ADDR_WIDTH),
