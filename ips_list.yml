@@ -120,9 +120,6 @@ riscv-dbg:
 register_interface:
   commit: b1bc9c22e0c2a5801107070c022904498dbae34b
   domain: [soc]
-mask_gen:
-  commit: master
-  group: Karthikeyan564
 Mask_Decompression:
   commit: 94f30db78337c9295ac2aa366c28242cffac4982
   server: https://github.com  
